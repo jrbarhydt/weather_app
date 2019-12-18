@@ -1,5 +1,5 @@
 from pprint import pprint as pp
-from flask import Flask, flash, redirect, render_template, request, url_for
+from flask import Flask, render_template, request
 from WeatherApp import api_get_request
 import pandas as pd
 
@@ -11,21 +11,21 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('weather.html', data=data)
+    return render_template('main.html', data=data)
 
 
 @app.route("/result", methods=['GET', 'POST'])
 def result():
-    data = []
+    weather_data = []
     error = None
-    select = request.form.get('comp_select')
-    resp = api_get_request(select)
+    comp_select = request.form.get('comp_select')
+    resp = api_get_request(comp_select)
     pp(resp)
     if resp:
-        data.append(resp)
-        if len(data) != 2:
+        weather_data.append(resp)
+        if len(weather_data) != 2:
             error = 'Bad Response from Weather API'
-    return render_template('result.html', data=data, error=error)
+    return render_template('weather.html', data=weather_data, error=error)
 
 
 if __name__ == '__main__':
