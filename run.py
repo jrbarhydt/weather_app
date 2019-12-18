@@ -1,4 +1,3 @@
-#!/usr/bin/env/python
 from pprint import pprint as pp
 from flask import Flask, flash, redirect, render_template, request, url_for
 from WeatherApp import api_get_request
